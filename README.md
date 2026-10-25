@@ -41,11 +41,7 @@ Download `Snugfit-Setup-<version>.exe` from [Releases](https://github.com/adamgl
    ```
    Repeat for each picture. The newest collection shows first in the app.
 2. Bump `Version` in `version.go` (for example `1.1.0`) and add a `## Version 1.1.0` section at the top of `CHANGELOG.md`.
-3. Commit, then tag and push:
-   ```
-   git tag v1.1.0
-   git push origin main --tags
-   ```
+3. Commit and push to `main`, then either push a tag (`git tag v1.1.0 && git push origin v1.1.0`) or open the **Actions** tab, pick **Release** and click **Run workflow**.
 4. The **Release** GitHub Action builds `Snugfit.exe` and the installer, then publishes a GitHub Release with `Snugfit-Setup-1.1.0.exe`. Players get it via **Options > Check for updates** (or automatically on startup).
 
 The updater compares the release tag (`v1.1.0`) with the app's version and downloads the asset whose name contains `Setup` and ends in `.exe`.
