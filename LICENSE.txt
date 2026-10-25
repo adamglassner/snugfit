@@ -1,0 +1,7 @@
+Snugfit - Copyright (c) 2026 Adam Glassner. All rights reserved.
+
+The Snugfit name, logo, puzzle pictures, music and sound effects are part of
+Snugfit and may not be redistributed separately without permission.
+
+Third-party software and fonts used by Snugfit are listed in
+THIRD-PARTY-NOTICES.txt together with their licenses.

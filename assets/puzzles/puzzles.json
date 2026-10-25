@@ -1,0 +1,28 @@
+{
+  "collections": [
+    {
+      "id": "2026-10",
+      "title": "October Collection",
+      "subtitle": "Halloween & autumn favorites",
+      "puzzles": [
+        { "id": "pumpkin-patch",  "title": "Pumpkin Patch at Dusk",  "image": "pumpkin-patch.jpg" },
+        { "id": "haunted-hill",   "title": "Haunted Hill House",     "image": "haunted-hill.jpg" },
+        { "id": "autumn-leaves",  "title": "Autumn Leaves",          "image": "autumn-leaves.jpg" },
+        { "id": "candy-night",    "title": "Halloween Candy Table",  "image": "candy-night.jpg" },
+        { "id": "trick-or-treat", "title": "Trick-or-Treat Street",  "image": "trick-or-treat.jpg" }
+      ]
+    },
+    {
+      "id": "starter",
+      "title": "Starter Collection",
+      "subtitle": "Cozy classics for any time of year",
+      "puzzles": [
+        { "id": "boston-terriers", "title": "Boston Terrier Pals",   "image": "boston-terriers.jpg" },
+        { "id": "flower-garden",   "title": "Spring Flower Garden",  "image": "flower-garden.jpg" },
+        { "id": "ocean-reef",      "title": "Coral Reef Friends",    "image": "ocean-reef.jpg" },
+        { "id": "forest-morning",  "title": "Misty Forest Morning",  "image": "forest-morning.jpg" },
+        { "id": "stained-glass",   "title": "Light Through the Glass", "image": "stained-glass.jpg" }
+      ]
+    }
+  ]
+}

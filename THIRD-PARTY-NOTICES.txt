@@ -1,0 +1,17 @@
+Snugfit uses the following third-party components. Thank you to their authors!
+
+Ebitengine (github.com/hajimehoshi/ebiten) - Apache License 2.0
+  Copyright 2013 The Ebitengine Authors. https://www.apache.org/licenses/LICENSE-2.0
+
+Oto (github.com/ebitengine/oto), PureGo (github.com/ebitengine/purego) - Apache License 2.0
+go-text/typesetting - BSD 3-Clause / Unlicense
+oggvorbis, vorbis (github.com/jfreymuth) - MIT License
+The Go programming language and golang.org/x libraries - BSD 3-Clause License
+  Copyright (c) 2009 The Go Authors.
+
+Poppins font - SIL Open Font License 1.1
+  Copyright 2020 The Poppins Project Authors (https://github.com/itfoundry/Poppins)
+  The full license is at https://openfontlicense.org
+
+Puzzle pictures were generated with AI image tools for Snugfit.
+Music and sound effects are original compositions created for Snugfit.

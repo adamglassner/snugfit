@@ -1,0 +1,7 @@
+dist/
+*.exe
+!installer/
+/snugfit
+/snugfit-linux
+.DS_Store
+Thumbs.db
