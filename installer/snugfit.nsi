@@ -59,7 +59,7 @@ VIAddVersionKey "LegalCopyright" "(c) 2026 ${PUBLISHER}"
 ; ---------------------------------------------------------------- pages
 !define MUI_WELCOMEPAGE_TITLE "Welcome to Snugfit!"
 !define MUI_WELCOMEPAGE_TEXT "Snugfit is a cozy jigsaw puzzle game for Windows.$\r$\n$\r$\n\
-Version ${VERSION} comes with 10 beautiful puzzles, including the October Collection, and four difficulty levels from 100 to 1,000 pieces.$\r$\n$\r$\n\
+Version ${VERSION} comes with 15 beautiful puzzles, including the new November Collection, and four difficulty levels from 100 to 1,000 pieces.$\r$\n$\r$\n\
 More puzzles are coming soon: five new ones every month, delivered by the built-in updater.$\r$\n$\r$\n\
 Click Next to continue."
 !insertmacro MUI_PAGE_WELCOME

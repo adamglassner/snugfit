@@ -1,15 +1,67 @@
 {
   "collections": [
     {
+      "id": "2026-11",
+      "title": "November Collection",
+      "subtitle": "Thanksgiving & fall harvest",
+      "puzzles": [
+        {
+          "id": "thanksgiving-feast",
+          "title": "Thanksgiving Feast",
+          "image": "thanksgiving-feast.jpg"
+        },
+        {
+          "id": "covered-bridge-in-autumn",
+          "title": "Covered Bridge in Autumn",
+          "image": "covered-bridge-in-autumn.jpg"
+        },
+        {
+          "id": "harvest-porch",
+          "title": "Harvest Porch",
+          "image": "harvest-porch.jpg"
+        },
+        {
+          "id": "wild-turkey-meadow",
+          "title": "Wild Turkey Meadow",
+          "image": "wild-turkey-meadow.jpg"
+        },
+        {
+          "id": "apple-orchard-harvest",
+          "title": "Apple Orchard Harvest",
+          "image": "apple-orchard-harvest.jpg"
+        }
+      ]
+    },
+    {
       "id": "2026-10",
       "title": "October Collection",
       "subtitle": "Halloween & autumn favorites",
       "puzzles": [
-        { "id": "pumpkin-patch",  "title": "Pumpkin Patch at Dusk",  "image": "pumpkin-patch.jpg" },
-        { "id": "haunted-hill",   "title": "Haunted Hill House",     "image": "haunted-hill.jpg" },
-        { "id": "autumn-leaves",  "title": "Autumn Leaves",          "image": "autumn-leaves.jpg" },
-        { "id": "candy-night",    "title": "Halloween Candy Table",  "image": "candy-night.jpg" },
-        { "id": "trick-or-treat", "title": "Trick-or-Treat Street",  "image": "trick-or-treat.jpg" }
+        {
+          "id": "pumpkin-patch",
+          "title": "Pumpkin Patch at Dusk",
+          "image": "pumpkin-patch.jpg"
+        },
+        {
+          "id": "haunted-hill",
+          "title": "Haunted Hill House",
+          "image": "haunted-hill.jpg"
+        },
+        {
+          "id": "autumn-leaves",
+          "title": "Autumn Leaves",
+          "image": "autumn-leaves.jpg"
+        },
+        {
+          "id": "candy-night",
+          "title": "Halloween Candy Table",
+          "image": "candy-night.jpg"
+        },
+        {
+          "id": "trick-or-treat",
+          "title": "Trick-or-Treat Street",
+          "image": "trick-or-treat.jpg"
+        }
       ]
     },
     {
@@ -17,11 +69,31 @@
       "title": "Starter Collection",
       "subtitle": "Cozy classics for any time of year",
       "puzzles": [
-        { "id": "boston-terriers", "title": "Boston Terrier Pals",   "image": "boston-terriers.jpg" },
-        { "id": "flower-garden",   "title": "Spring Flower Garden",  "image": "flower-garden.jpg" },
-        { "id": "ocean-reef",      "title": "Coral Reef Friends",    "image": "ocean-reef.jpg" },
-        { "id": "forest-morning",  "title": "Misty Forest Morning",  "image": "forest-morning.jpg" },
-        { "id": "stained-glass",   "title": "Light Through the Glass", "image": "stained-glass.jpg" }
+        {
+          "id": "boston-terriers",
+          "title": "Boston Terrier Pals",
+          "image": "boston-terriers.jpg"
+        },
+        {
+          "id": "flower-garden",
+          "title": "Spring Flower Garden",
+          "image": "flower-garden.jpg"
+        },
+        {
+          "id": "ocean-reef",
+          "title": "Coral Reef Friends",
+          "image": "ocean-reef.jpg"
+        },
+        {
+          "id": "forest-morning",
+          "title": "Misty Forest Morning",
+          "image": "forest-morning.jpg"
+        },
+        {
+          "id": "stained-glass",
+          "title": "Light Through the Glass",
+          "image": "stained-glass.jpg"
+        }
       ]
     }
   ]

@@ -1,5 +1,17 @@
 # Changelog
 
+## Version 1.1.0 — November 2026
+
+### New puzzles: the November Collection
+Five new Thanksgiving and fall harvest puzzles, each in all four difficulty levels:
+- Thanksgiving Feast
+- Covered Bridge in Autumn
+- Harvest Porch
+- Wild Turkey Meadow
+- Apple Orchard Harvest
+
+Snugfit now has 15 puzzles, and more are coming next month!
+
 ## Version 1.0.0 — October 2026
 
 The very first release of Snugfit!
