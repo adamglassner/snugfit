@@ -215,7 +215,27 @@
           "abbr": "MI",
           "icon": "michigan.png",
           "comingSoon": true,
-          "puzzles": []
+          "puzzles": [
+            {
+              "id": "mackinac-island",
+              "title": "Mackinac Island",
+              "image": "mackinac-island.jpg"
+            },
+            {
+              "id": "mackinac-bridge",
+              "title": "Mackinac Bridge",
+              "image": "mackinac-bridge.jpg"
+            },
+            {
+              "id": "lake-michigan-shore",
+              "title": "Lake Michigan Shore",
+              "image": "lake-michigan-shore.jpg"
+            }
+          ],
+          "subtitle": "The Great Lakes State",
+          "soonBadge": "+2",
+          "soonTitle": "More Michigan puzzles coming soon!",
+          "soonText": "Sleeping Bear Dunes & the Soo Locks"
         },
         {
           "id": "state-minnesota",

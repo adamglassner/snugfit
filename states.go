@@ -4,6 +4,7 @@ import (
 	"fmt"
 	"image/color"
 	"math"
+	"strings"
 
 	"github.com/hajimehoshi/ebiten/v2"
 	"github.com/hajimehoshi/ebiten/v2/inpututil"
@@ -66,11 +67,19 @@ func drawCategoryCard(dst *ebiten.Image, r Rect, c *Collection) {
 	}
 	if c.PuzzleCount() == 0 {
 		drawSoonPill(dst, img.X+10, img.Y+22, "Coming soon", AlignLeft)
+	} else {
+		drawSoonPill(dst, img.X+10, img.Y+22, "More states coming soon", AlignLeft)
 	}
 	Text(dst, c.Title, Bold, 15, r.X+16, img.Bottom()+24, p.Text, AlignLeft)
 	sub := fmt.Sprintf("%d states", n)
 	if pc := c.PuzzleCount(); pc > 0 {
-		sub = fmt.Sprintf("%d states  -  %d puzzles", n, pc)
+		ready := 0
+		for _, sc := range c.Subcategories {
+			if len(sc.Puzzles) > 0 {
+				ready++
+			}
+		}
+		sub = fmt.Sprintf("%d of %d states  -  %d puzzles", ready, n, pc)
 	}
 	Text(dst, sub, Regular, 12, r.X+16, img.Bottom()+44, p.TextDim, AlignLeft)
 	Text(dst, "Open >", Medium, 12.5, r.Right()-18, img.Bottom()+44, p.Accent, AlignRight)
@@ -168,6 +177,8 @@ func (s *CategoryScene) Draw(dst *ebiten.Image) {
 		FillRR(dst, rr, 16, p.Surface)
 		if hv > 0.01 {
 			StrokeRR(dst, rr, 16, 2, alpha(p.Accent, hv))
+		} else if len(sc.Puzzles) > 0 {
+			StrokeRR(dst, rr, 16, 2.5, p.Teal)
 		} else {
 			StrokeRR(dst, rr, 16, 1, p.Border)
 		}
@@ -194,7 +205,10 @@ func (s *CategoryScene) Draw(dst *ebiten.Image) {
 		if len(sc.Puzzles) == 0 {
 			drawSoonPill(dst, rr.CX(), art.Bottom()+46, "Coming soon", AlignCenter)
 		} else {
-			Text(dst, fmt.Sprintf("%d puzzles", len(sc.Puzzles)), Medium, 12.5, rr.CX(), art.Bottom()+46, p.Teal, AlignCenter)
+			lbl := fmt.Sprintf("%d puzzles  - Play", len(sc.Puzzles))
+			pw := TextWidth(lbl, Bold, 11.5) + 20
+			FillRR(dst, Rect{rr.CX() - pw/2, art.Bottom() + 34, pw, 24}, 12, p.Teal)
+			Text(dst, lbl, Bold, 11.5, rr.CX(), art.Bottom()+46, color.RGBA{255, 255, 255, 255}, AlignCenter)
 		}
 	}
 	FillRect(dst, Rect{0, 0, SW, 140}, alpha(p.Bg, 0.96))
@@ -203,6 +217,20 @@ func (s *CategoryScene) Draw(dst *ebiten.Image) {
 	if s.cat.PuzzleCount() == 0 {
 		drawSoonPill(dst, margin, 116, "Coming soon", AlignLeft)
 		Text(dst, "Every state is getting its own puzzles. Check back for updates!", Regular, 14, margin+120, 116, p.TextDim, AlignLeft)
+	} else {
+		var ready []string
+		for _, sc := range s.cat.Subcategories {
+			if len(sc.Puzzles) > 0 {
+				ready = append(ready, sc.Title)
+			}
+		}
+		pill := "More states coming soon"
+		drawSoonPill(dst, margin, 116, pill, AlignLeft)
+		msg := "Ready to play: " + strings.Join(ready, ", ") + ". The rest are on the way!"
+		if len(ready) > 4 {
+			msg = fmt.Sprintf("%d states ready to play. The rest are on the way!", len(ready))
+		}
+		Text(dst, msg, Regular, 14, margin+TextWidth(pill, Bold, 11.5)+36, 116, p.TextDim, AlignLeft)
 	}
 	for _, w := range s.widgets {
 		w.Draw(dst)

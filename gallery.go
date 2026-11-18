@@ -187,10 +187,14 @@ func (g *GalleryScene) Draw(dst *ebiten.Image) {
 			ty := g.sectionY[i]
 			Text(dst, c.Title, Bold, 20, margin, ty, p.Text, AlignLeft)
 			tw := TextWidth(c.Title, Bold, 20)
-			if c.ComingSoon && c.PuzzleCount() == 0 {
-				pw := TextWidth("Coming soon", Bold, 11.5) + 20
+			if c.ComingSoon && (c.PuzzleCount() == 0 || len(c.Subcategories) > 0) {
+				lbl := "Coming soon"
+				if c.PuzzleCount() > 0 {
+					lbl = "More coming soon"
+				}
+				pw := TextWidth(lbl, Bold, 11.5) + 20
 				FillRR(dst, Rect{margin + tw + 12, ty - 12, pw, 24}, 12, p.Accent)
-				Text(dst, "Coming soon", Bold, 11.5, margin+tw+12+pw/2, ty, p.AccentText, AlignCenter)
+				Text(dst, lbl, Bold, 11.5, margin+tw+12+pw/2, ty, p.AccentText, AlignCenter)
 				tw += pw + 12
 			}
 			Text(dst, c.Subtitle, Regular, 14, margin+tw+14, ty+1, p.TextDim, AlignLeft)
@@ -300,6 +304,9 @@ func (g *GalleryScene) drawSoonCard(dst *ebiten.Image, r Rect, col *Collection) 
 		}
 		if badge == "" {
 			badge = "+"
+		}
+		if col.SoonTitle != "" {
+			title = col.SoonTitle
 		}
 	}
 	cy := r.Y + r.H*0.42

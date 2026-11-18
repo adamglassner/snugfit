@@ -51,6 +51,19 @@ func newTour(dir string) *tour {
 		{wait: 40, shot: "02c_states"},
 		{action: func(g *Game) bool { settings.Theme = "dark"; return true }},
 		{wait: 10, shot: "02d_states_dark"},
+		{action: func(g *Game) bool {
+			if cs, ok := g.scene.(*CategoryScene); ok {
+				cs.scroll.Y, cs.scroll.Target = 420, 420
+			}
+			settings.Theme = "light"
+			return true
+		}},
+		{wait: 20, shot: "02e_states_michigan"},
+		{action: func(g *Game) bool {
+			g.SetScene(NewSubcategoryGallery(findCollection("states"), findCollection("state-michigan")))
+			return true
+		}},
+		{wait: 40, shot: "02f_michigan"},
 		{action: func(g *Game) bool { settings.Theme = "light"; return true }},
 		{action: func(g *Game) bool {
 			if gs, ok := g.scene.(*GalleryScene); ok {

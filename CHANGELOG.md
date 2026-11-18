@@ -1,5 +1,15 @@
 # Changelog
 
+## Version 1.3.0 — November 2026
+
+### The first State Puzzles: Michigan!
+Three new Michigan puzzles, each in all four difficulty levels:
+- Mackinac Island
+- Mackinac Bridge
+- Lake Michigan Shore
+
+Sleeping Bear Dunes and the Soo Locks are coming soon, along with the other 49 states.
+
 ## Version 1.2.0 — November 2026
 
 ### State Puzzles: coming soon

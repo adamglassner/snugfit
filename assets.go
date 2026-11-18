@@ -42,6 +42,7 @@ type Collection struct {
 	ComingSoon bool         `json:"comingSoon,omitempty"` // shows a "coming soon" card in this category
 	SoonBadge  string       `json:"soonBadge,omitempty"`  // short text in the card's circle, e.g. "50"
 	SoonText   string       `json:"soonText,omitempty"`   // line under the card title
+	SoonTitle  string       `json:"soonTitle,omitempty"`  // overrides the card title
 	Abbr       string       `json:"abbr,omitempty"`       // e.g. "ME" for a state
 	Icon       string       `json:"icon,omitempty"`       // silhouette in assets/states, e.g. "maine.png"
 	Puzzles    []*PuzzleDef `json:"puzzles"`
