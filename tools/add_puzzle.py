@@ -3,6 +3,7 @@
 
 Usage:
   python tools/add_puzzle.py <image file> "<Puzzle title>" --collection 2026-11 --collection-title "November Collection" [--subtitle "..."]
+  python tools/add_puzzle.py <image file> "<Puzzle title>" --collection state-maine     (a State Puzzle)
 
 What it does:
   * resizes/upscales the picture so it is at least 2752 px wide (HD pieces at 1,000 pieces)
@@ -48,7 +49,11 @@ def main():
 
     mpath = os.path.join(PUZ, 'puzzles.json')
     m = json.load(open(mpath))
-    col = next((c for c in m['collections'] if c['id'] == a.collection), None)
+    def walk(cs):
+        for c in cs:
+            yield c
+            yield from walk(c.get('subcategories', []))
+    col = next((c for c in walk(m['collections']) if c['id'] == a.collection), None)
     if col is None:
         if not a.collection_title:
             sys.exit('New collection: please pass --collection-title')

@@ -42,7 +42,50 @@ type Collection struct {
 	ComingSoon bool         `json:"comingSoon,omitempty"` // shows a "coming soon" card in this category
 	SoonBadge  string       `json:"soonBadge,omitempty"`  // short text in the card's circle, e.g. "50"
 	SoonText   string       `json:"soonText,omitempty"`   // line under the card title
+	Abbr       string       `json:"abbr,omitempty"`       // e.g. "ME" for a state
+	Icon       string       `json:"icon,omitempty"`       // silhouette in assets/states, e.g. "maine.png"
 	Puzzles    []*PuzzleDef `json:"puzzles"`
+	// Subcategories turn a collection into a category of categories
+	// (State Puzzles holds one subcategory per state).
+	Subcategories []*Collection `json:"subcategories,omitempty"`
+	icon          *ebiten.Image
+	iconTried     bool
+}
+
+// IconImage returns the subcategory's silhouette (white on transparent), or nil.
+func (c *Collection) IconImage() *ebiten.Image {
+	if !c.iconTried {
+		c.iconTried = true
+		if c.Icon != "" {
+			c.icon = loadEbitenImage(assetPath("states", c.Icon))
+		}
+	}
+	return c.icon
+}
+
+// PuzzleCount counts puzzles in this collection and all its subcategories.
+func (c *Collection) PuzzleCount() int {
+	n := len(c.Puzzles)
+	for _, s := range c.Subcategories {
+		n += s.PuzzleCount()
+	}
+	return n
+}
+
+func findCollection(id string) *Collection {
+	var walk func(cs []*Collection) *Collection
+	walk = func(cs []*Collection) *Collection {
+		for _, c := range cs {
+			if c.ID == id {
+				return c
+			}
+			if f := walk(c.Subcategories); f != nil {
+				return f
+			}
+		}
+		return nil
+	}
+	return walk(manifest.Collections)
 }
 
 func comingSoonCollections() []*Collection {
@@ -115,12 +158,17 @@ func loadAssets() {
 	} else if err := json.Unmarshal(b, &manifest); err != nil {
 		assetsError = "puzzles.json is invalid: " + err.Error()
 	}
-	for _, c := range manifest.Collections {
-		for _, p := range c.Puzzles {
-			p.Collection = c.ID
-			puzzleByID[p.ID] = p
+	var register func(cs []*Collection)
+	register = func(cs []*Collection) {
+		for _, c := range cs {
+			for _, p := range c.Puzzles {
+				p.Collection = c.ID
+				puzzleByID[p.ID] = p
+			}
+			register(c.Subcategories)
 		}
 	}
+	register(manifest.Collections)
 	logoLight = loadEbitenImage(assetPath("branding", "logo_light.png"))
 	logoDark = loadEbitenImage(assetPath("branding", "logo_dark.png"))
 	iconImg = loadEbitenImage(assetPath("branding", "icon_256.png"))
@@ -159,7 +207,7 @@ func logo() *ebiten.Image {
 func totalPuzzles() int {
 	n := 0
 	for _, c := range manifest.Collections {
-		n += len(c.Puzzles)
+		n += c.PuzzleCount()
 	}
 	return n
 }

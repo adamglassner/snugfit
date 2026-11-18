@@ -41,11 +41,11 @@ Download `Snugfit-Setup-<version>.exe` from [Releases](https://github.com/adamgl
    ```
    Repeat for each picture. The newest collection shows first in the app.
 
-   **State Puzzles** go in the existing `states` category instead, for example:
+   **State Puzzles**: each of the 50 states is its own category inside State Puzzles (ids like `state-maine`, `state-new-york`). To add one:
    ```
-   python tools/add_puzzle.py maine.jpg "Maine: Portland Head Light" --collection states
+   python tools/add_puzzle.py maine.jpg "Portland Head Light" --collection state-maine
    ```
-   The category keeps its "coming soon" card until all 50 are in. When the last state is added, set `"comingSoon": false` for it in `assets/puzzles/puzzles.json`.
+   A state shows "Coming soon" until it has a puzzle, then lists its puzzles.
 2. Bump `Version` in `version.go` (for example `1.1.0`) and add a `## Version 1.1.0` section at the top of `CHANGELOG.md`.
 3. Commit and push to `main`, then either push a tag (`git tag v1.1.0 && git push origin v1.1.0`) or open the **Actions** tab, pick **Release** and click **Run workflow**.
 4. The **Release** GitHub Action builds `Snugfit.exe` and the installer, then publishes a GitHub Release with `Snugfit-Setup-1.1.0.exe`. Players get it via **Options > Check for updates** (or automatically on startup).

@@ -38,8 +38,410 @@
       "subtitle": "A puzzle for every U.S. state",
       "comingSoon": true,
       "soonBadge": "50",
-      "soonText": "A puzzle for every state, released a few at a time",
-      "puzzles": []
+      "soonText": "All 50 states, released a few at a time",
+      "puzzles": [],
+      "subcategories": [
+        {
+          "id": "state-alabama",
+          "title": "Alabama",
+          "abbr": "AL",
+          "icon": "alabama.png",
+          "comingSoon": true,
+          "puzzles": []
+        },
+        {
+          "id": "state-alaska",
+          "title": "Alaska",
+          "abbr": "AK",
+          "icon": "alaska.png",
+          "comingSoon": true,
+          "puzzles": []
+        },
+        {
+          "id": "state-arizona",
+          "title": "Arizona",
+          "abbr": "AZ",
+          "icon": "arizona.png",
+          "comingSoon": true,
+          "puzzles": []
+        },
+        {
+          "id": "state-arkansas",
+          "title": "Arkansas",
+          "abbr": "AR",
+          "icon": "arkansas.png",
+          "comingSoon": true,
+          "puzzles": []
+        },
+        {
+          "id": "state-california",
+          "title": "California",
+          "abbr": "CA",
+          "icon": "california.png",
+          "comingSoon": true,
+          "puzzles": []
+        },
+        {
+          "id": "state-colorado",
+          "title": "Colorado",
+          "abbr": "CO",
+          "icon": "colorado.png",
+          "comingSoon": true,
+          "puzzles": []
+        },
+        {
+          "id": "state-connecticut",
+          "title": "Connecticut",
+          "abbr": "CT",
+          "icon": "connecticut.png",
+          "comingSoon": true,
+          "puzzles": []
+        },
+        {
+          "id": "state-delaware",
+          "title": "Delaware",
+          "abbr": "DE",
+          "icon": "delaware.png",
+          "comingSoon": true,
+          "puzzles": []
+        },
+        {
+          "id": "state-florida",
+          "title": "Florida",
+          "abbr": "FL",
+          "icon": "florida.png",
+          "comingSoon": true,
+          "puzzles": []
+        },
+        {
+          "id": "state-georgia",
+          "title": "Georgia",
+          "abbr": "GA",
+          "icon": "georgia.png",
+          "comingSoon": true,
+          "puzzles": []
+        },
+        {
+          "id": "state-hawaii",
+          "title": "Hawaii",
+          "abbr": "HI",
+          "icon": "hawaii.png",
+          "comingSoon": true,
+          "puzzles": []
+        },
+        {
+          "id": "state-idaho",
+          "title": "Idaho",
+          "abbr": "ID",
+          "icon": "idaho.png",
+          "comingSoon": true,
+          "puzzles": []
+        },
+        {
+          "id": "state-illinois",
+          "title": "Illinois",
+          "abbr": "IL",
+          "icon": "illinois.png",
+          "comingSoon": true,
+          "puzzles": []
+        },
+        {
+          "id": "state-indiana",
+          "title": "Indiana",
+          "abbr": "IN",
+          "icon": "indiana.png",
+          "comingSoon": true,
+          "puzzles": []
+        },
+        {
+          "id": "state-iowa",
+          "title": "Iowa",
+          "abbr": "IA",
+          "icon": "iowa.png",
+          "comingSoon": true,
+          "puzzles": []
+        },
+        {
+          "id": "state-kansas",
+          "title": "Kansas",
+          "abbr": "KS",
+          "icon": "kansas.png",
+          "comingSoon": true,
+          "puzzles": []
+        },
+        {
+          "id": "state-kentucky",
+          "title": "Kentucky",
+          "abbr": "KY",
+          "icon": "kentucky.png",
+          "comingSoon": true,
+          "puzzles": []
+        },
+        {
+          "id": "state-louisiana",
+          "title": "Louisiana",
+          "abbr": "LA",
+          "icon": "louisiana.png",
+          "comingSoon": true,
+          "puzzles": []
+        },
+        {
+          "id": "state-maine",
+          "title": "Maine",
+          "abbr": "ME",
+          "icon": "maine.png",
+          "comingSoon": true,
+          "puzzles": []
+        },
+        {
+          "id": "state-maryland",
+          "title": "Maryland",
+          "abbr": "MD",
+          "icon": "maryland.png",
+          "comingSoon": true,
+          "puzzles": []
+        },
+        {
+          "id": "state-massachusetts",
+          "title": "Massachusetts",
+          "abbr": "MA",
+          "icon": "massachusetts.png",
+          "comingSoon": true,
+          "puzzles": []
+        },
+        {
+          "id": "state-michigan",
+          "title": "Michigan",
+          "abbr": "MI",
+          "icon": "michigan.png",
+          "comingSoon": true,
+          "puzzles": []
+        },
+        {
+          "id": "state-minnesota",
+          "title": "Minnesota",
+          "abbr": "MN",
+          "icon": "minnesota.png",
+          "comingSoon": true,
+          "puzzles": []
+        },
+        {
+          "id": "state-mississippi",
+          "title": "Mississippi",
+          "abbr": "MS",
+          "icon": "mississippi.png",
+          "comingSoon": true,
+          "puzzles": []
+        },
+        {
+          "id": "state-missouri",
+          "title": "Missouri",
+          "abbr": "MO",
+          "icon": "missouri.png",
+          "comingSoon": true,
+          "puzzles": []
+        },
+        {
+          "id": "state-montana",
+          "title": "Montana",
+          "abbr": "MT",
+          "icon": "montana.png",
+          "comingSoon": true,
+          "puzzles": []
+        },
+        {
+          "id": "state-nebraska",
+          "title": "Nebraska",
+          "abbr": "NE",
+          "icon": "nebraska.png",
+          "comingSoon": true,
+          "puzzles": []
+        },
+        {
+          "id": "state-nevada",
+          "title": "Nevada",
+          "abbr": "NV",
+          "icon": "nevada.png",
+          "comingSoon": true,
+          "puzzles": []
+        },
+        {
+          "id": "state-new-hampshire",
+          "title": "New Hampshire",
+          "abbr": "NH",
+          "icon": "new-hampshire.png",
+          "comingSoon": true,
+          "puzzles": []
+        },
+        {
+          "id": "state-new-jersey",
+          "title": "New Jersey",
+          "abbr": "NJ",
+          "icon": "new-jersey.png",
+          "comingSoon": true,
+          "puzzles": []
+        },
+        {
+          "id": "state-new-mexico",
+          "title": "New Mexico",
+          "abbr": "NM",
+          "icon": "new-mexico.png",
+          "comingSoon": true,
+          "puzzles": []
+        },
+        {
+          "id": "state-new-york",
+          "title": "New York",
+          "abbr": "NY",
+          "icon": "new-york.png",
+          "comingSoon": true,
+          "puzzles": []
+        },
+        {
+          "id": "state-north-carolina",
+          "title": "North Carolina",
+          "abbr": "NC",
+          "icon": "north-carolina.png",
+          "comingSoon": true,
+          "puzzles": []
+        },
+        {
+          "id": "state-north-dakota",
+          "title": "North Dakota",
+          "abbr": "ND",
+          "icon": "north-dakota.png",
+          "comingSoon": true,
+          "puzzles": []
+        },
+        {
+          "id": "state-ohio",
+          "title": "Ohio",
+          "abbr": "OH",
+          "icon": "ohio.png",
+          "comingSoon": true,
+          "puzzles": []
+        },
+        {
+          "id": "state-oklahoma",
+          "title": "Oklahoma",
+          "abbr": "OK",
+          "icon": "oklahoma.png",
+          "comingSoon": true,
+          "puzzles": []
+        },
+        {
+          "id": "state-oregon",
+          "title": "Oregon",
+          "abbr": "OR",
+          "icon": "oregon.png",
+          "comingSoon": true,
+          "puzzles": []
+        },
+        {
+          "id": "state-pennsylvania",
+          "title": "Pennsylvania",
+          "abbr": "PA",
+          "icon": "pennsylvania.png",
+          "comingSoon": true,
+          "puzzles": []
+        },
+        {
+          "id": "state-rhode-island",
+          "title": "Rhode Island",
+          "abbr": "RI",
+          "icon": "rhode-island.png",
+          "comingSoon": true,
+          "puzzles": []
+        },
+        {
+          "id": "state-south-carolina",
+          "title": "South Carolina",
+          "abbr": "SC",
+          "icon": "south-carolina.png",
+          "comingSoon": true,
+          "puzzles": []
+        },
+        {
+          "id": "state-south-dakota",
+          "title": "South Dakota",
+          "abbr": "SD",
+          "icon": "south-dakota.png",
+          "comingSoon": true,
+          "puzzles": []
+        },
+        {
+          "id": "state-tennessee",
+          "title": "Tennessee",
+          "abbr": "TN",
+          "icon": "tennessee.png",
+          "comingSoon": true,
+          "puzzles": []
+        },
+        {
+          "id": "state-texas",
+          "title": "Texas",
+          "abbr": "TX",
+          "icon": "texas.png",
+          "comingSoon": true,
+          "puzzles": []
+        },
+        {
+          "id": "state-utah",
+          "title": "Utah",
+          "abbr": "UT",
+          "icon": "utah.png",
+          "comingSoon": true,
+          "puzzles": []
+        },
+        {
+          "id": "state-vermont",
+          "title": "Vermont",
+          "abbr": "VT",
+          "icon": "vermont.png",
+          "comingSoon": true,
+          "puzzles": []
+        },
+        {
+          "id": "state-virginia",
+          "title": "Virginia",
+          "abbr": "VA",
+          "icon": "virginia.png",
+          "comingSoon": true,
+          "puzzles": []
+        },
+        {
+          "id": "state-washington",
+          "title": "Washington",
+          "abbr": "WA",
+          "icon": "washington.png",
+          "comingSoon": true,
+          "puzzles": []
+        },
+        {
+          "id": "state-west-virginia",
+          "title": "West Virginia",
+          "abbr": "WV",
+          "icon": "west-virginia.png",
+          "comingSoon": true,
+          "puzzles": []
+        },
+        {
+          "id": "state-wisconsin",
+          "title": "Wisconsin",
+          "abbr": "WI",
+          "icon": "wisconsin.png",
+          "comingSoon": true,
+          "puzzles": []
+        },
+        {
+          "id": "state-wyoming",
+          "title": "Wyoming",
+          "abbr": "WY",
+          "icon": "wyoming.png",
+          "comingSoon": true,
+          "puzzles": []
+        }
+      ]
     },
     {
       "id": "2026-10",

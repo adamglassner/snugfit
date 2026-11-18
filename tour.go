@@ -47,6 +47,11 @@ func newTour(dir string) *tour {
 			return true
 		}},
 		{wait: 20, shot: "02b_gallery_states"},
+		{action: func(g *Game) bool { g.SetScene(NewCategoryScene(findCollection("states"))); return true }},
+		{wait: 40, shot: "02c_states"},
+		{action: func(g *Game) bool { settings.Theme = "dark"; return true }},
+		{wait: 10, shot: "02d_states_dark"},
+		{action: func(g *Game) bool { settings.Theme = "light"; return true }},
 		{action: func(g *Game) bool {
 			if gs, ok := g.scene.(*GalleryScene); ok {
 				gs.selected = puzzleByID["boston-terriers"]

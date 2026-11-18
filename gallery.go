@@ -18,6 +18,11 @@ type GalleryScene struct {
 	cards    []cardInfo
 	sectionY []float64
 	saved    map[string]int
+	cols     []*Collection // collections shown on this screen
+	title    string
+	sub      string
+	back     func()
+	isMain   bool
 }
 
 func (g *GalleryScene) has(id string, mode int) bool {
@@ -30,14 +35,27 @@ type cardInfo struct {
 	r    Rect
 	soon bool
 	col  *Collection
+	cat  *Collection // a category card that opens its subcategories
 }
 
-func NewGalleryScene() *GalleryScene {
-	g := &GalleryScene{confirm: -1, saved: map[string]int{}}
+func newGallery(cols []*Collection, title, sub string, back func(), isMain bool) *GalleryScene {
+	g := &GalleryScene{confirm: -1, saved: map[string]int{}, cols: cols, title: title, sub: sub, back: back, isMain: isMain}
 	for _, si := range listSaves() {
 		g.saved[si.Key] = int(si.Percent * 100)
 	}
 	return g
+}
+
+func NewGalleryScene() *GalleryScene {
+	return newGallery(manifest.Collections, "Choose a puzzle",
+		fmt.Sprintf("%d puzzles  -  4 difficulty levels each", totalPuzzles()),
+		func() { game.SetScene(NewMenuScene()) }, true)
+}
+
+// NewSubcategoryGallery shows the puzzles of one subcategory (e.g. one state).
+func NewSubcategoryGallery(parent, c *Collection) *GalleryScene {
+	return newGallery([]*Collection{c}, c.Title, fmt.Sprintf("%s  -  %d puzzles", parent.Title, len(c.Puzzles)),
+		func() { game.SetScene(NewCategoryScene(parent)) }, false)
 }
 
 func header(widgets *[]Widget, title string, back func()) {
@@ -72,12 +90,19 @@ func (g *GalleryScene) layoutCards() float64 {
 	margin, gap, cw, cols := g.gridMetrics()
 	ch := cw*0.5625 + 62
 	y := 110.0 - g.scroll.Y
-	for ci, c := range manifest.Collections {
+	for ci, c := range g.cols {
 		y += 50 // section title
 		g.sectionY = append(g.sectionY, y-30)
+		if len(c.Subcategories) > 0 {
+			// a category of categories: one card that opens it
+			r := Rect{margin, y, cw, ch}
+			g.cards = append(g.cards, cardInfo{r: r, cat: c})
+			y += ch + gap + 16
+			continue
+		}
 		items := len(c.Puzzles)
 		extra := 0
-		if ci == 0 || c.ComingSoon {
+		if (ci == 0 && g.isMain) || c.ComingSoon {
 			extra = 1
 		}
 		for i := 0; i < items+extra; i++ {
@@ -104,13 +129,14 @@ func (g *GalleryScene) Update() {
 		g.updateModal()
 		return
 	}
-	header(&g.widgets, "", func() { game.SetScene(NewMenuScene()) })
+	header(&g.widgets, "", g.back)
 	contentH := g.layoutCards()
 	g.scroll.Max = contentH - SH + 30
 	area := Rect{0, 90, SW, SH - 90}
 	g.scroll.Update(area)
 	if inpututil.IsKeyJustPressed(ebiten.KeyEscape) {
-		game.SetScene(NewMenuScene())
+		g.back()
+		return
 	}
 	for _, w := range g.widgets {
 		w.Update()
@@ -118,6 +144,18 @@ func (g *GalleryScene) Update() {
 	for i := range g.cards {
 		c := &g.cards[i]
 		if c.soon {
+			continue
+		}
+		if c.cat != nil {
+			h := in.Hover(c.r) && in.MY > 90
+			animHover("cat_"+c.cat.ID, h)
+			if h {
+				ebiten.SetCursorShape(ebiten.CursorShapePointer)
+			}
+			if h && in.Click(c.r) {
+				playSFX("click")
+				game.SetScene(NewCategoryScene(c.cat))
+			}
 			continue
 		}
 		h := in.Hover(c.r) && in.MY > 90
@@ -140,21 +178,16 @@ func (g *GalleryScene) Draw(dst *ebiten.Image) {
 	if g.selected == nil || true {
 		g.layoutCards()
 		y := 110.0 - g.scroll.Y
-		ci := 0
-		for _, c := range manifest.Collections {
-			_ = c
-			ci++
-		}
 		// section titles
 		margin, _, _, _ := g.gridMetrics()
-		for i, c := range manifest.Collections {
+		for i, c := range g.cols {
 			if i >= len(g.sectionY) {
 				break
 			}
 			ty := g.sectionY[i]
 			Text(dst, c.Title, Bold, 20, margin, ty, p.Text, AlignLeft)
 			tw := TextWidth(c.Title, Bold, 20)
-			if c.ComingSoon && len(c.Puzzles) == 0 {
+			if c.ComingSoon && c.PuzzleCount() == 0 {
 				pw := TextWidth("Coming soon", Bold, 11.5) + 20
 				FillRR(dst, Rect{margin + tw + 12, ty - 12, pw, 24}, 12, p.Accent)
 				Text(dst, "Coming soon", Bold, 11.5, margin+tw+12+pw/2, ty, p.AccentText, AlignCenter)
@@ -167,7 +200,9 @@ func (g *GalleryScene) Draw(dst *ebiten.Image) {
 			if c.r.Bottom() < 80 || c.r.Y > SH {
 				continue
 			}
-			if c.soon {
+			if c.cat != nil {
+				drawCategoryCard(dst, c.r, c.cat)
+			} else if c.soon {
 				g.drawSoonCard(dst, c.r, c.col)
 			} else {
 				g.drawCard(dst, c)
@@ -176,7 +211,7 @@ func (g *GalleryScene) Draw(dst *ebiten.Image) {
 	}
 	// header bar
 	FillRect(dst, Rect{0, 0, SW, 90}, alpha(p.Bg, 0.96))
-	drawHeader(dst, "Choose a puzzle", fmt.Sprintf("%d puzzles  -  4 difficulty levels each", totalPuzzles()))
+	drawHeader(dst, g.title, g.sub)
 	for _, w := range g.widgets {
 		w.Draw(dst)
 	}
@@ -361,10 +396,8 @@ func (g *GalleryScene) drawModal(dst *ebiten.Image) {
 	DrawImageRR(dst, pz.Thumb(), img, 16, 1)
 	Text(dst, pz.Title, Bold, 22, r.X+28, img.Bottom()+36, p.Text, AlignLeft)
 	colTitle := ""
-	for _, c := range manifest.Collections {
-		if c.ID == pz.Collection {
-			colTitle = c.Title
-		}
+	if c := findCollection(pz.Collection); c != nil {
+		colTitle = c.Title
 	}
 	Text(dst, colTitle, Regular, 14, r.X+28, img.Bottom()+64, p.TextDim, AlignLeft)
 	TextWrapped(dst, "Pick a difficulty. Your progress saves automatically, so you can stop any time and come back later.", Regular, 13.5, r.X+28, img.Bottom()+84, img.W-10, 21, p.TextDim, AlignLeft)

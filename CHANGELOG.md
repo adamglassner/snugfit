@@ -1,5 +1,11 @@
 # Changelog
 
+## Version 1.2.0 — November 2026
+
+### State Puzzles: coming soon
+- State Puzzles now has its own category, marked "Coming soon".
+- Open it to see all 50 U.S. states, each with its own category and map outline. Every state is marked "Coming soon" until its puzzles arrive.
+
 ## Version 1.1.0 — November 2026
 
 ### New puzzles: the November Collection
