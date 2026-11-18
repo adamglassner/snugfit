@@ -1,0 +1,39 @@
+# Downloads full-size puzzle pictures from URLs and commits the originals to
+# the "incoming-images" branch, ready to be added with tools/add_puzzle.py.
+# Run it from the Actions tab: paste one "name=url" pair per line.
+name: Import images
+
+on:
+  workflow_dispatch:
+    inputs:
+      images:
+        description: "One name=url per line (or separated by spaces)"
+        required: true
+
+permissions:
+  contents: write
+
+jobs:
+  import:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Download images
+        env:
+          IMAGES: ${{ inputs.images }}
+        run: |
+          mkdir -p incoming
+          for pair in $IMAGES; do
+            name="${pair%%=*}"; url="${pair#*=}"
+            case "$name" in *[!a-z0-9-]*|"") echo "bad name: $name"; exit 1;; esac
+            curl -fsSL --retry 3 -o "incoming/$name.png" "$url"
+            file "incoming/$name.png"
+          done
+      - name: Commit to incoming-images branch
+        run: |
+          cd incoming
+          git init -q -b incoming-images
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add -A
+          git commit -q -m "Imported images"
+          git push -f "https://x-access-token:${{ github.token }}@github.com/${{ github.repository }}.git" incoming-images
