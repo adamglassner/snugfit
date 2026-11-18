@@ -36,10 +36,23 @@ func (p *PuzzleDef) Aspect() float64 {
 }
 
 type Collection struct {
-	ID       string       `json:"id"`
-	Title    string       `json:"title"`
-	Subtitle string       `json:"subtitle"`
-	Puzzles  []*PuzzleDef `json:"puzzles"`
+	ID         string       `json:"id"`
+	Title      string       `json:"title"`
+	Subtitle   string       `json:"subtitle"`
+	ComingSoon bool         `json:"comingSoon,omitempty"` // shows a "coming soon" card in this category
+	SoonBadge  string       `json:"soonBadge,omitempty"`  // short text in the card's circle, e.g. "50"
+	SoonText   string       `json:"soonText,omitempty"`   // line under the card title
+	Puzzles    []*PuzzleDef `json:"puzzles"`
+}
+
+func comingSoonCollections() []*Collection {
+	var out []*Collection
+	for _, c := range manifest.Collections {
+		if c.ComingSoon {
+			out = append(out, c)
+		}
+	}
+	return out
 }
 
 type Manifest struct {

@@ -33,6 +33,15 @@
       ]
     },
     {
+      "id": "states",
+      "title": "State Puzzles",
+      "subtitle": "A puzzle for every U.S. state",
+      "comingSoon": true,
+      "soonBadge": "50",
+      "soonText": "A puzzle for every state, released a few at a time",
+      "puzzles": []
+    },
+    {
       "id": "2026-10",
       "title": "October Collection",
       "subtitle": "Halloween & autumn favorites",

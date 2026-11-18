@@ -4,6 +4,7 @@ import (
 	"fmt"
 	"image/color"
 	"math"
+	"strings"
 
 	"github.com/hajimehoshi/ebiten/v2"
 	"github.com/hajimehoshi/ebiten/v2/inpututil"
@@ -15,6 +16,7 @@ type GalleryScene struct {
 	selected *PuzzleDef
 	confirm  int // mode index awaiting "start over" confirmation, -1 none
 	cards    []cardInfo
+	sectionY []float64
 	saved    map[string]int
 }
 
@@ -27,6 +29,7 @@ type cardInfo struct {
 	p    *PuzzleDef
 	r    Rect
 	soon bool
+	col  *Collection
 }
 
 func NewGalleryScene() *GalleryScene {
@@ -65,14 +68,16 @@ func (g *GalleryScene) gridMetrics() (float64, float64, float64, int) {
 
 func (g *GalleryScene) layoutCards() float64 {
 	g.cards = g.cards[:0]
+	g.sectionY = g.sectionY[:0]
 	margin, gap, cw, cols := g.gridMetrics()
 	ch := cw*0.5625 + 62
 	y := 110.0 - g.scroll.Y
 	for ci, c := range manifest.Collections {
 		y += 50 // section title
+		g.sectionY = append(g.sectionY, y-30)
 		items := len(c.Puzzles)
 		extra := 0
-		if ci == 0 {
+		if ci == 0 || c.ComingSoon {
 			extra = 1
 		}
 		for i := 0; i < items+extra; i++ {
@@ -81,7 +86,10 @@ func (g *GalleryScene) layoutCards() float64 {
 			if i < items {
 				g.cards = append(g.cards, cardInfo{p: c.Puzzles[i], r: r})
 			} else {
-				g.cards = append(g.cards, cardInfo{r: r, soon: true})
+				if c.ComingSoon && items == 0 && cols >= 3 {
+					r.W = cw*2 + gap // an empty upcoming category gets a wider card
+				}
+				g.cards = append(g.cards, cardInfo{r: r, soon: true, col: c})
 			}
 		}
 		rows := (items + extra + cols - 1) / cols
@@ -138,19 +146,21 @@ func (g *GalleryScene) Draw(dst *ebiten.Image) {
 			ci++
 		}
 		// section titles
-		idx := 0
 		margin, _, _, _ := g.gridMetrics()
-		for _, c := range manifest.Collections {
-			if idx < len(g.cards) {
-				ty := g.cards[idx].r.Y - 30
-				Text(dst, c.Title, Bold, 20, margin, ty, p.Text, AlignLeft)
-				tw := TextWidth(c.Title, Bold, 20)
-				Text(dst, c.Subtitle, Regular, 14, margin+tw+14, ty+1, p.TextDim, AlignLeft)
+		for i, c := range manifest.Collections {
+			if i >= len(g.sectionY) {
+				break
 			}
-			idx += len(c.Puzzles)
-			if idx < len(g.cards) && g.cards[idx].soon {
-				idx++
+			ty := g.sectionY[i]
+			Text(dst, c.Title, Bold, 20, margin, ty, p.Text, AlignLeft)
+			tw := TextWidth(c.Title, Bold, 20)
+			if c.ComingSoon && len(c.Puzzles) == 0 {
+				pw := TextWidth("Coming soon", Bold, 11.5) + 20
+				FillRR(dst, Rect{margin + tw + 12, ty - 12, pw, 24}, 12, p.Accent)
+				Text(dst, "Coming soon", Bold, 11.5, margin+tw+12+pw/2, ty, p.AccentText, AlignCenter)
+				tw += pw + 12
 			}
+			Text(dst, c.Subtitle, Regular, 14, margin+tw+14, ty+1, p.TextDim, AlignLeft)
 		}
 		_ = y
 		for _, c := range g.cards {
@@ -158,7 +168,7 @@ func (g *GalleryScene) Draw(dst *ebiten.Image) {
 				continue
 			}
 			if c.soon {
-				g.drawSoonCard(dst, c.r)
+				g.drawSoonCard(dst, c.r, c.col)
 			} else {
 				g.drawCard(dst, c)
 			}
@@ -234,7 +244,7 @@ func (g *GalleryScene) drawCard(dst *ebiten.Image, c cardInfo) {
 	Text(dst, sub, Regular, 12, r.X+16, img.Bottom()+44, p.TextDim, AlignLeft)
 }
 
-func (g *GalleryScene) drawSoonCard(dst *ebiten.Image, r Rect) {
+func (g *GalleryScene) drawSoonCard(dst *ebiten.Image, r Rect, col *Collection) {
 	p := P()
 	FillRR(dst, r, 18, alpha(p.Accent, 0.07))
 	// dashed border
@@ -247,11 +257,23 @@ func (g *GalleryScene) drawSoonCard(dst *ebiten.Image, r Rect) {
 		x1, y1 := perim(r, b)
 		Line(dst, x0, y0, x1, y1, 2, alpha(p.Accent, 0.6))
 	}
+	badge, title, sub := "+5", "More puzzles coming soon!", "5 new puzzles every month"
+	if col != nil && col.ComingSoon {
+		badge, title, sub = col.SoonBadge, col.Title+" coming soon!", col.SoonText
+		if len(col.Puzzles) > 0 {
+			title = "More " + strings.ToLower(col.Title) + " coming soon!"
+		}
+		if badge == "" {
+			badge = "+"
+		}
+	}
 	cy := r.Y + r.H*0.42
 	FillCircle(dst, r.CX(), cy-14, 26, p.Accent)
-	Text(dst, "+5", Bold, 18, r.CX(), cy-14, p.AccentText, AlignCenter)
-	Text(dst, "More puzzles coming soon!", Bold, 15, r.CX(), cy+36, p.Text, AlignCenter)
-	Text(dst, "5 new puzzles every month", Regular, 12.5, r.CX(), cy+58, p.TextDim, AlignCenter)
+	Text(dst, badge, Bold, 18, r.CX(), cy-14, p.AccentText, AlignCenter)
+	Text(dst, title, Bold, 15, r.CX(), cy+36, p.Text, AlignCenter)
+	if sub != "" {
+		Text(dst, sub, Regular, 12.5, r.CX(), cy+58, p.TextDim, AlignCenter)
+	}
 }
 
 func perim(r Rect, d float64) (float64, float64) {

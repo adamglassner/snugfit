@@ -20,11 +20,11 @@ type tourStep struct {
 }
 
 type tour struct {
-	dir     string
-	steps   []tourStep
-	i       int
-	frames  int
-	pending string
+	dir       string
+	steps     []tourStep
+	i         int
+	frames    int
+	pending   string
 	testPiece *Piece
 }
 
@@ -40,6 +40,13 @@ func newTour(dir string) *tour {
 		{wait: 40, shot: "01_menu"},
 		{action: func(g *Game) bool { g.SetScene(NewGalleryScene()); return true }},
 		{wait: 40, shot: "02_gallery"},
+		{action: func(g *Game) bool {
+			if gs, ok := g.scene.(*GalleryScene); ok {
+				gs.scroll.Y, gs.scroll.Target = 470, 470
+			}
+			return true
+		}},
+		{wait: 20, shot: "02b_gallery_states"},
 		{action: func(g *Game) bool {
 			if gs, ok := g.scene.(*GalleryScene); ok {
 				gs.selected = puzzleByID["boston-terriers"]
@@ -59,10 +66,10 @@ func newTour(dir string) *tour {
 					p = q
 				}
 			}
-			sx := (p.X+ps.geo.PW/2-ps.camX)*ps.zoom/S
-			sy := (p.Y+ps.geo.PH/2-ps.camY)*ps.zoom/S
-			tx := (float64(p.C)*ps.geo.PW+ps.geo.PW/2+ps.geo.PW*0.1-ps.camX)*ps.zoom/S
-			ty := (float64(p.R)*ps.geo.PH+ps.geo.PH/2-ps.camY)*ps.zoom/S
+			sx := (p.X + ps.geo.PW/2 - ps.camX) * ps.zoom / S
+			sy := (p.Y + ps.geo.PH/2 - ps.camY) * ps.zoom / S
+			tx := (float64(p.C)*ps.geo.PW + ps.geo.PW/2 + ps.geo.PW*0.1 - ps.camX) * ps.zoom / S
+			ty := (float64(p.R)*ps.geo.PH + ps.geo.PH/2 - ps.camY) * ps.zoom / S
 			fakeQueue = append(fakeQueue, Input{MX: sx, MY: sy, Pressed: true, Down: true})
 			for k := 1; k <= 20; k++ {
 				f := float64(k) / 20
@@ -100,9 +107,21 @@ func newTour(dir string) *tour {
 			return true
 		}},
 		{wait: 40, shot: "05_play_progress"},
-		{action: func(g *Game) bool { ps := play(); ps.showPreview = false; ps.edgesOnly = true; ps.fit(false); return true }},
+		{action: func(g *Game) bool {
+			ps := play()
+			ps.showPreview = false
+			ps.edgesOnly = true
+			ps.fit(false)
+			return true
+		}},
 		{wait: 20, shot: "06_edges_only"},
-		{action: func(g *Game) bool { ps := play(); ps.edgesOnly = false; ps.paused = true; ps.saveNow(false); return true }},
+		{action: func(g *Game) bool {
+			ps := play()
+			ps.edgesOnly = false
+			ps.paused = true
+			ps.saveNow(false)
+			return true
+		}},
 		{wait: 20, shot: "07_pause"},
 		{action: func(g *Game) bool { g.SetScene(NewOptionsScene(nil)); return true }},
 		{wait: 40, shot: "08_options"},
@@ -116,7 +135,11 @@ func newTour(dir string) *tour {
 		{wait: 40, shot: "12_options_dark"},
 		{action: func(g *Game) bool { settings.Theme = "light"; g.SetScene(NewChangelogScene()); return true }},
 		{wait: 40, shot: "13_changelog"},
-		{action: func(g *Game) bool { settings.TableColor = 1; g.SetScene(NewPlayScene(puzzleByID["ocean-reef"], 3, nil)); return true }},
+		{action: func(g *Game) bool {
+			settings.TableColor = 1
+			g.SetScene(NewPlayScene(puzzleByID["ocean-reef"], 3, nil))
+			return true
+		}},
 		{wait: 10, action: waitLoaded},
 		{wait: 30, shot: "14_advanced_1000"},
 		{action: func(g *Game) bool {

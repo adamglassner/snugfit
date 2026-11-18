@@ -215,7 +215,11 @@ func (m *MenuScene) Draw(dst *ebiten.Image) {
 		FillCircle(dst, cs.X+44, cs.CY(), 22, p.Accent)
 		Text(dst, "+5", Bold, 16, cs.X+44, cs.CY(), p.AccentText, AlignCenter)
 		Text(dst, "More puzzles coming soon!", Bold, 17, cs.X+82, cs.CY()-12, p.Text, AlignLeft)
-		Text(dst, "Five new puzzles arrive every month. Updates install right from Options.", Regular, 13.5, cs.X+82, cs.CY()+13, p.TextDim, AlignLeft)
+		line := "Five new puzzles arrive every month. Updates install right from Options."
+		if soon := comingSoonCollections(); len(soon) > 0 {
+			line = "Five new puzzles every month, and " + soon[0].Title + " are on the way!"
+		}
+		Text(dst, line, Regular, 13.5, cs.X+82, cs.CY()+13, p.TextDim, AlignLeft)
 	}
 
 	for _, w := range m.widgets {

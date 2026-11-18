@@ -10,6 +10,9 @@ Five new Thanksgiving and fall harvest puzzles, each in all four difficulty leve
 - Wild Turkey Meadow
 - Apple Orchard Harvest
 
+### Coming soon: State Puzzles
+- A new **State Puzzles** category: a puzzle for every U.S. state, released a few at a time.
+
 Snugfit now has 15 puzzles, and more are coming next month!
 
 ## Version 1.0.0 — October 2026
